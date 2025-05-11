@@ -1,10 +1,11 @@
-find_package(Qt6 REQUIRED COMPONENTS
-    Core
-    Gui
-    Widgets
-    Multimedia
-    MultimediaWidgets
-    StateMachine
+find_package(Qt6 REQUIRED
+    COMPONENTS
+        Core
+        Gui
+        Widgets
+        Multimedia
+        MultimediaWidgets
+        StateMachine
 )
 
 qt_standard_project_setup()
@@ -24,6 +25,13 @@ qt_add_executable(${PROJECT_NAME}
     main.cpp
 )
 
+set_target_properties(${PROJECT_NAME}
+    PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+        LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+)
+
 target_link_libraries(${PROJECT_NAME}
     PUBLIC 
         liblua_static
@@ -36,18 +44,3 @@ target_link_libraries(${PROJECT_NAME}
         Qt6::MultimediaWidgets
         Qt6::StateMachine
 )
-
-include(GNUInstallDirs)
-
-install(TARGETS ${PROJECT_NAME}
-    BUNDLE  DESTINATION .
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
-
-qt_generate_deploy_app_script(
-    TARGET ${PROJECT_NAME}
-    OUTPUT_SCRIPT deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
-)
-install(SCRIPT ${deploy_script})

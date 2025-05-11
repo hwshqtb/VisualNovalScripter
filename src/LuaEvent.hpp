@@ -1,3 +1,5 @@
+#pragma once
+
 #include <QtCore/QEvent>
 #include <QtCore/QString>
 
@@ -5,14 +7,14 @@ class LuaEvent: public QEvent {
 public:
     constexpr static QEvent::Type used_type = static_cast<QEvent::Type>(QEvent::User + 1);
 
-    LuaEvent(std::string name):
-        QEvent(used_type), _name(std::move(name)) {}
+    LuaEvent(QString name):
+        QEvent(used_type), _name(name) {}
 
-    std::string name()const {
+    QString name()const {
         return _name;
     }
 
 private:
-    std::string _name;
+    QString _name;
 
 };
