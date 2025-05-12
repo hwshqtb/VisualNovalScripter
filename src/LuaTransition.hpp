@@ -19,7 +19,8 @@ public:
     }
 
     void onTransition(QEvent* event) {
-        _transition(static_cast<LuaEvent*>(event)->name().toStdString());
+        if (event->type() == LuaEvent::used_type)
+            _transition(static_cast<LuaEvent*>(event)->name().toStdString());
     }
     
 private:
